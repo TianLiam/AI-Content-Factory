@@ -7,10 +7,13 @@ from app.core.logging import setup_logging
 from app.core.exceptions import AppException
 from app.infrastructure.database import engine, Base
 from app.api.v1.routes import router as v1_router
+from app.plugins import get_plugin_registry
 
 setup_logging()
 
 Base.metadata.create_all(bind=engine)
+
+import app.plugins.stock_plugin  # 触发插件注册
 
 app = FastAPI(
     title="AI Content Factory API",
